@@ -12,9 +12,14 @@ function showError(username, message) {
 }
 
 function showSuccess(username) {
-    const formControl = username.parentElement;
-    formControl.className = "form-control success";
-  }
+  const formControl = username.parentElement;
+  formControl.className = "form-control success";
+}
+
+function isValidEmail() {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
 
 // event listiner
 form.addEventListener("submit", function (e) {
@@ -23,5 +28,22 @@ form.addEventListener("submit", function (e) {
     showError(username, "username required");
   } else {
     showSuccess(username);
+  }
+  if (email.value === "") {
+    showError(email, "email required");
+  }else if(!isValidEmail(email.value)){
+    showError(email,'email not valid')
+  } else {
+    showSuccess(email);
+  }
+  if (password.value === "") {
+    showError(password, "password required");
+  } else {
+    showSuccess(password);
+  }
+  if (password2.value === "") {
+    showError(password2, "password2 required");
+  } else {
+    showSuccess(password2);
   }
 });
