@@ -16,34 +16,47 @@ function showSuccess(username) {
   formControl.className = "form-control success";
 }
 
-function isValidEmail() {
+function checkEmail(input) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
+  if (re.test(input.value.trim())) {
+    showSuccess(input)
+    
+  } else {
+  showError(input,'email not valid')
+  }
+}
+function checkRequired(inputArr){
+  inputArr.forEach(element => {
+  if(element.value.trim()===''){
+    showError(element,`${element.id} is required`)
+  }
+  else{
+    showSuccess(element)
+  }
+  });
+}
+function checkLength(input,min,max){
+  if (input.value.length<min) {
+    showError(input,`${input.id } must be at least ${min} characters`)
+  }else if (input.value.length>max) {
+    showError(input,`${input.id } must be at max ${max} characters`)
+  }
+}
+
+function checkPassword(input1,input2){
+  if (input1.value !=input2.value) {
+    showError(input2,'passwords don\'t match')
+  }
 }
 
 // event listiner
 form.addEventListener("submit", function (e) {
   e.preventDefault();
-  if (username.value === "") {
-    showError(username, "username required");
-  } else {
-    showSuccess(username);
-  }
-  if (email.value === "") {
-    showError(email, "email required");
-  }else if(!isValidEmail(email.value)){
-    showError(email,'email not valid')
-  } else {
-    showSuccess(email);
-  }
-  if (password.value === "") {
-    showError(password, "password required");
-  } else {
-    showSuccess(password);
-  }
-  if (password2.value === "") {
-    showError(password2, "password2 required");
-  } else {
-    showSuccess(password2);
-  }
+  
+  checkRequired([username,password,password2,email])
+  checkLength(username,3,30)
+  checkLength(password2,3,30)
+  checkEmail(email)
+  checkPassword(password,password2)
+
 });
