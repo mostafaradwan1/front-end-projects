@@ -4,4 +4,4 @@
 
 ## i used in these projects 
 
-#### HTML , CSS , JS , Bootstrao
+#### HTML , CSS , JS , Bootstrap
